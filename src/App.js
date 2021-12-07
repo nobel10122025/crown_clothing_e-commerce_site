@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Homepage from './Pages/homepage/Homepage'
 import Shoppage from './Pages/Shoppage/Shoppage'
 import Header from './Components/header/Header'
+import SignInSignUpPage from './Pages/SignIn-SignUp-page/SignInSignUpPage';
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" caseSensitive={false} element={<Homepage />} />
-        <Route path="/Shoppage" caseSensitive={false} element={<Shoppage />} />
+        <Route path="/Shop" caseSensitive={false} element={<Shoppage />} />
+        <Route path="/Contact" caseSensitive={false} element={<SignInSignUpPage />} />
       </Routes>
     </Router>
     </>

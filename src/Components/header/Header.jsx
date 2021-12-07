@@ -9,10 +9,10 @@ function Header() {
                 <Logo className='logo' />
             </Link>
             <div className="options">
-                <Link className="option" to="Shoppage">
+                <Link className="option" to="Shop">
                     SHOP
                 </Link>
-                <Link className="option" to="Shoppage">
+                <Link className="option" to="Contact">
                     CONTACT
                 </Link>
             </div>
