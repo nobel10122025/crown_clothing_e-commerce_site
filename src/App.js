@@ -1,37 +1,35 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import { connect } from 'react-redux';
+
 import Homepage from './Pages/homepage/Homepage'
 import Shoppage from './Pages/Shoppage/Shoppage'
 import Header from './Components/header/Header'
 import SignInSignUpPage from './Pages/SignIn-SignUp-page/SignInSignUpPage';
 import { auth  , createUserProfileDocument} from './firebase/Firebase';
+import {setCurrentUser} from './Redux/User/user.action'
 
 class App extends React.Component {
-
-  constructor(){
-    super()
-    this.state= {
-      currentUser : null
-    }
-  }
 
   unsubscribeFromAuth = null ;
 
   componentDidMount(){
+    const {setCurrentUser} = this.props
+ 
     this.unsubscribeFromAuth= auth.onAuthStateChanged(async authUser => {
       if(authUser) {
         const userRef = await createUserProfileDocument(authUser); 
         userRef.onSnapshot((snapShot)=>{
-          this.setState({
-            currentUser : {
+          setCurrentUser(
+            {
               id : snapShot.id,
               ...snapShot.data()
             }
-          } , ()=> console.log(this.state))
+          )
         })
       }else{
-        this.setState({currentUser : authUser})
+        setCurrentUser(authUser)
       }
 
     })
@@ -40,20 +38,23 @@ class App extends React.Component {
     this.unsubscribeFromAuth();
   }
 
+  
   render (){
     return(
     <div>
-    <Router>
-      <Header currentUser={this.state.currentUser}/>
+      <Header/>
       <Routes>
         <Route path="/" caseSensitive={false} element={<Homepage />} />
         <Route path="/Shop" caseSensitive={false} element={<Shoppage />} />
         <Route path="/Contact" caseSensitive={false} element={<SignInSignUpPage />} />
       </Routes>
-    </Router>
     </div>
     )
   }
 }
+const dispatchStatetoProps = (dispatch) => ({
+  setCurrentUser : user => dispatch(setCurrentUser(user))
+}
+)
 
-export default App;
+export default connect(null,dispatchStatetoProps)(App);
