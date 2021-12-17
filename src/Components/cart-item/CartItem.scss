@@ -4,8 +4,11 @@
     height: 80px;
     margin-bottom: 15px;
   
-    img {
+    .image {
       width: 30%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
     }
   
     .item-details {
