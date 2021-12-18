@@ -3,10 +3,13 @@ import './App.css';
 import { Routes, Route } from "react-router-dom";
 import { connect } from 'react-redux';
 
+import Header from './Components/header/Header'
+
 import Homepage from './Pages/homepage/Homepage'
 import Shoppage from './Pages/Shoppage/Shoppage'
-import Header from './Components/header/Header'
 import SignInSignUpPage from './Pages/SignIn-SignUp-page/SignInSignUpPage';
+import CheckoutPage from './Pages/checkout/CheckoutPage';
+
 import { auth  , createUserProfileDocument} from './firebase/Firebase';
 import {setCurrentUser} from './Redux/User/user.action'
 
@@ -47,6 +50,7 @@ class App extends React.Component {
         <Route path="/" caseSensitive={false} element={<Homepage />} />
         <Route path="/Shop" caseSensitive={false} element={<Shoppage />} />
         <Route path="/Contact" caseSensitive={false} element={<SignInSignUpPage />} />
+        <Route path="/Checkout" caseSensitive={false} element={<CheckoutPage />} />
       </Routes>
     </div>
     )
