@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Routes, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { connect } from 'react-redux';
 
 import Header from './Components/header/Header'
@@ -46,12 +46,12 @@ class App extends React.Component {
     return(
     <div>
       <Header/>
-      <Routes>
-        <Route path="/" caseSensitive={false} element={<Homepage />} />
-        <Route path="/Shop" caseSensitive={false} element={<Shoppage />} />
-        <Route path="/Contact" caseSensitive={false} element={<SignInSignUpPage />} />
-        <Route path="/Checkout" caseSensitive={false} element={<CheckoutPage />} />
-      </Routes>
+      <Switch>
+        <Route path="/" exact component={Homepage } />
+        <Route path="/Shop"  component={Shoppage } />
+        <Route path="/Contact"  component={SignInSignUpPage } />
+        <Route path="/Checkout" exact  component={CheckoutPage } />
+      </Switch>
     </div>
     )
   }
