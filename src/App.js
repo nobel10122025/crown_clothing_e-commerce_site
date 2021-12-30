@@ -11,7 +11,7 @@ import SignInSignUpPage from './Pages/SignIn-SignUp-page/SignInSignUpPage';
 import CheckoutPage from './Pages/checkout/CheckoutPage';
 
 import { auth  , createUserProfileDocument} from './firebase/Firebase';
-import {setCurrentUser} from './Redux/User/user.action'
+import {setCurrentUser} from './Redux/User/user.action';
 
 class App extends React.Component {
 
@@ -56,9 +56,9 @@ class App extends React.Component {
     )
   }
 }
+
 const dispatchStatetoProps = (dispatch) => ({
   setCurrentUser : user => dispatch(setCurrentUser(user))
-}
-)
+})
 
 export default connect(null,dispatchStatetoProps)(App);
