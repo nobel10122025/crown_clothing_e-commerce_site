@@ -1,6 +1,5 @@
-import { ShopTypes } from "./shop.types"
-export const updateCollections = (collections) => ({
+import  {ShopTypes } from "./shop.types"
+export const updateCollections = (collectionsMap) => ({
     type : ShopTypes.UPDATE_COLLECTIONS,
-    payload : collections,
+    payload : collectionsMap,
 })
-export default updateCollections

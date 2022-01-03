@@ -1,7 +1,6 @@
-import SHOP_DATA from "./Shop.data";
 import { ShopTypes } from "./shop.types";
 const INITIAL_DATA = {
-    collections : SHOP_DATA
+    collections : null
 }
 export const shopReducer = ( state = INITIAL_DATA , action) => {
     switch (action.type) {
@@ -9,7 +8,7 @@ export const shopReducer = ( state = INITIAL_DATA , action) => {
         return {
             ...state ,
             collections : action.payload
-        }
+        };
         default:
             return state;
     }
