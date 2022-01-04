@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import CollectionOutline from '../../Components/collection-outline/CollectionOutline'
-import { firestore , convertCollectionsSnapshotToMap } from '../../firebase/Firebase';
 import CollectionPage from '../collection/Collection';
-import {updateCollections} from '../../Redux/shop/shop.action';
 import WithSpinner from '../../Components/with-spinner/WithSpinner';
+import { fetchCollectionsStartAsync } from '../../Redux/shop/shop.action';
 
 const CollectionOutlineWithSpinner = WithSpinner(CollectionOutline)
 const CollectionPageWithSpinner = WithSpinner(CollectionPage)
@@ -15,18 +14,11 @@ class Shoppage extends Component {
     state = {
         loading : true
     }
-    unsubscribeFromSnapshot = null;
 
     componentDidMount(){
-        
-        const {updateCollections} = this.props
-        const collectionRef = firestore.collection('collections')
-        collectionRef.get().then((snapShot)=>{
-        const collectionsMap = convertCollectionsSnapshotToMap(snapShot);
-        // console.log(collectionsMap)
-        updateCollections(collectionsMap);
-        this.setState({loading : false})
-        })
+        const { fetchCollectionsStartAsync } = this.props;        
+        fetchCollectionsStartAsync();
+        this.setState({loading:false})
     }
     
     
@@ -42,10 +34,7 @@ class Shoppage extends Component {
     }
 }
 const mapDispatchToProps = dispatch => ({
-    updateCollections : collectionsMap => dispatch(updateCollections(collectionsMap))
+    fetchCollectionsStartAsync: () => dispatch(fetchCollectionsStartAsync())    
 });
 
-export default connect(
-    null,
-    mapDispatchToProps
-  )(Shoppage);
+export default connect(null,mapDispatchToProps)(Shoppage);
