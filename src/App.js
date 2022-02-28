@@ -1,17 +1,18 @@
-import React from 'react';
+import React,{lazy , Suspense} from 'react';
 import './App.css';
 import { Switch, Route } from "react-router-dom";
 import { connect } from 'react-redux';
 
 import Header from './Components/header/Header'
-
-import Homepage from './Pages/homepage/Homepage'
-import Shoppage from './Pages/Shoppage/Shoppage'
-import SignInSignUpPage from './Pages/SignIn-SignUp-page/SignInSignUpPage';
-import CheckoutPage from './Pages/checkout/CheckoutPage';
+import Spinner from './Components/Spinner/Spinner';
 
 import { auth  , createUserProfileDocument} from './firebase/Firebase';
 import {setCurrentUser} from './Redux/User/user.action';
+
+const Homepage = lazy(() => import('./Pages/homepage/Homepage'))
+const Shoppage = lazy(() => import('./Pages/Shoppage/Shoppage'))
+const SignInSignUpPage = lazy(() => import('./Pages/SignIn-SignUp-page/SignInSignUpPage'))
+const CheckoutPage = lazy(() => import('./Pages/checkout/CheckoutPage'))
 
 class App extends React.Component {
 
@@ -46,12 +47,14 @@ class App extends React.Component {
     return(
     <div>
       <Header/>
-      <Switch>
-        <Route path="/" exact component={Homepage } />
-        <Route path="/Shop"  component={Shoppage } />
-        <Route path="/Contact"  component={SignInSignUpPage } />
-        <Route path="/Checkout" exact  component={CheckoutPage } />
-      </Switch>
+      <Suspense fallback={<Spinner />}>
+        <Switch>
+          <Route path="/" exact component={Homepage } />
+          <Route path="/Shop"  component={Shoppage } />
+          <Route path="/Contact"  component={SignInSignUpPage } />
+          <Route path="/Checkout" exact  component={CheckoutPage } />
+        </Switch>
+      </Suspense>
     </div>
     )
   }

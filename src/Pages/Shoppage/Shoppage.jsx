@@ -1,13 +1,13 @@
-import React, { Component } from 'react'
-import { Route } from 'react-router-dom';
+import React, { Component ,lazy , Suspense } from 'react'
+import { Route , Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import CollectionOutline from '../../Components/collection-outline/CollectionOutline'
-import CollectionPage from '../collection/Collection';
-import WithSpinner from '../../Components/with-spinner/WithSpinner';
+
+import Spinner from '../../Components/Spinner/Spinner';
+
 import { fetchCollectionsStartAsync } from '../../Redux/shop/shop.action';
 
-const CollectionOutlineWithSpinner = WithSpinner(CollectionOutline)
-const CollectionPageWithSpinner = WithSpinner(CollectionPage)
+const CollectionOutline = lazy(() => import('../../Components/collection-outline/CollectionOutline'))
+const CollectionPage= lazy(() => import('../collection/Collection'))
 
 class Shoppage extends Component {
 
@@ -24,11 +24,14 @@ class Shoppage extends Component {
     
     render() {
         const {match} =this.props
-        const {loading} = this.state
         return (
             <div className="shop-page">
-                 <Route exact path={`${match.path}`} render={(props)=>(< CollectionOutlineWithSpinner isLoading={loading} {...props} />)} />
-                 <Route path={`${match.path}/:CollectionId`}  render={(props)=>(< CollectionPageWithSpinner isLoading={loading} {...props} />)} />
+                <Suspense fallback={<Spinner />}>
+                    <Switch>
+                    <Route exact path={`${match.path}`} component={CollectionOutline} />
+                    <Route path={`${match.path}/:CollectionId`}  component={CollectionPage} />
+                    </Switch>
+                </Suspense>
            </div>
         )
     }
