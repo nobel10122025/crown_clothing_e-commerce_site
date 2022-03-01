@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import Header from './Components/header/Header'
 import Spinner from './Components/Spinner/Spinner';
+import ErrorBoundary from './Components/ErrorBoundary/ErrorBoundary';
 
 import { auth  , createUserProfileDocument} from './firebase/Firebase';
 import {setCurrentUser} from './Redux/User/user.action';
@@ -47,14 +48,16 @@ class App extends React.Component {
     return(
     <div>
       <Header/>
-      <Suspense fallback={<Spinner />}>
-        <Switch>
-          <Route path="/" exact component={Homepage } />
-          <Route path="/Shop"  component={Shoppage } />
-          <Route path="/Contact"  component={SignInSignUpPage } />
-          <Route path="/Checkout" exact  component={CheckoutPage } />
-        </Switch>
-      </Suspense>
+      <ErrorBoundary>
+        <Suspense fallback={<Spinner />}>
+          <Switch>
+            <Route path="/" exact component={Homepage } />
+            <Route path="/Shop"  component={Shoppage } />
+            <Route path="/Contact"  component={SignInSignUpPage } />
+            <Route path="/Checkout" exact  component={CheckoutPage } />
+          </Switch>
+        </Suspense>
+      </ErrorBoundary>
     </div>
     )
   }
